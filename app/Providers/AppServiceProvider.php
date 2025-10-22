@@ -61,8 +61,8 @@ class AppServiceProvider extends ServiceProvider
      */
     protected function configureViewComposers(): void
     {
-        // Share breadcrumbs with all views
-        View::composer('*', function ($view) {
+        // Share breadcrumbs only where the breadcrumb component is used
+        View::composer('components.breadcrumb', function ($view) {
             if (request()->route()) {
                 $breadcrumbs = BreadcrumbHelper::generate();
                 $view->with('breadcrumbs', $breadcrumbs);
