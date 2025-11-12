@@ -16,16 +16,40 @@ export default {
             },
             colors: {
                 "sacli-green": {
-                    50: "#D1FAE5", // Light green
-                    100: "#A7F3D0",
-                    200: "#6EE7B7",
-                    300: "#34D399", // Accent
-                    400: "#10B981", // Primary green
-                    500: "#059669", // Secondary green
-                    600: "#047857", // Dark green
-                    700: "#065F46",
-                    800: "#064E3B",
-                    900: "#022C22",
+                    50: "#E8F5E9", // Lightest tint
+                    100: "#C8E6C9",
+                    200: "#A5D6A7",
+                    300: "#81C784",
+                    400: "#66BB6A",
+                    500: "#116530", // Light Green (primary)
+                    600: "#114232", // Dark Green (secondary)
+                    700: "#0D3426",
+                    800: "#09261B",
+                    900: "#051810",
+                },
+                "sacli-yellow": {
+                    50: "#FFFEF5",
+                    100: "#FFFAEB",
+                    200: "#FFF4CC",
+                    300: "#FFEEAA",
+                    400: "#FFE87D",
+                    500: "#FFCC1D", // Yellow (accent)
+                    600: "#E6B800",
+                    700: "#CC9F00",
+                    800: "#B38600",
+                    900: "#996D00",
+                },
+                "sacli-grey": {
+                    50: "#FAFAF8",
+                    100: "#F5F5F0",
+                    200: "#E8E8CC", // Grey (background)
+                    300: "#D9D9B8",
+                    400: "#CACAA4",
+                    500: "#BBBB90",
+                    600: "#9A9A75",
+                    700: "#79795A",
+                    800: "#58583F",
+                    900: "#373724",
                 },
             },
             borderRadius: {

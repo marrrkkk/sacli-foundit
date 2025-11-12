@@ -30,7 +30,7 @@
 </head>
 
 <body class="font-sans antialiased">
-    <div class="min-h-screen bg-sacli-green-50">
+    <div class="min-h-screen bg-sacli-grey-200">
         <x-unified-navigation />
 
         <!-- Page Heading -->

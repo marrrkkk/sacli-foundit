@@ -33,6 +33,11 @@ Route::middleware('throttle:search')->group(function () {
 // Individual item display (no rate limiting needed for viewing)
 Route::get('/items/{id}', [PublicController::class, 'show'])->name('items.show')->where('id', '[0-9]+');
 
+// About page
+Route::get('/about', function () {
+    return view('public.about');
+})->name('about');
+
 // ============================================================================
 // AUTHENTICATED USER ROUTES - Requires login
 // ============================================================================

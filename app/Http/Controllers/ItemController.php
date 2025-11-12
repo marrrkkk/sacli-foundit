@@ -73,6 +73,15 @@ class ItemController extends Controller
       // Create the item using the service
       $item = $this->itemService->createItem($data, $images);
 
+      // Send email notification to admin
+      try {
+        \Illuminate\Support\Facades\Mail::to(config('mail.admin_notification_email', env('ADMIN_NOTIFICATION_EMAIL')))
+          ->send(new \App\Mail\NewItemSubmitted($item));
+      } catch (\Exception $e) {
+        // Log the error but don't fail the request
+        \Illuminate\Support\Facades\Log::error('Failed to send new item notification email: ' . $e->getMessage());
+      }
+
       return redirect()
         ->route('items.my-items')
         ->with('success', 'Your item has been submitted successfully! Reference number: #' . $item->id . '. It will be reviewed by our team before being published.');

@@ -11,7 +11,7 @@
                     <a href="{{ auth()->check() ? route('dashboard') : route('home') }}" class="flex items-center gap-2">
                         <div
                             class="w-10 h-10 bg-gradient-to-br from-sacli-green-500 to-sacli-green-600 rounded-lg flex items-center justify-center shadow-md">
-                            <x-icon name="magnifying-glass" size="md" class="text-white" />
+                            <x-icon name="magnifying-glass" size="md" class="text-sacli-yellow-500" />
                         </div>
                         <span class="text-xl font-bold text-gray-900 hidden lg:block">SACLI FOUNDIT</span>
                     </a>
@@ -35,6 +35,9 @@
                     </x-nav-link>
                     <x-nav-link :href="route('browse')" :active="request()->routeIs('browse')" icon="squares-2x2">
                         {{ __('Browse') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('about')" :active="request()->routeIs('about')" icon="information-circle">
+                        {{ __('About') }}
                     </x-nav-link>
 
                     @auth
@@ -138,6 +141,9 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('browse')" :active="request()->routeIs('browse')" icon="squares-2x2">
                 {{ __('Browse') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('about')" :active="request()->routeIs('about')" icon="information-circle">
+                {{ __('About') }}
             </x-responsive-nav-link>
 
             @auth
