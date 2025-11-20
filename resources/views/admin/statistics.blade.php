@@ -619,10 +619,11 @@
             Chart.defaults.borderColor = '#E5E7EB';
 
             const greenColors = {
-                primary: '#10B981',
-                secondary: '#059669',
-                light: '#D1FAE5',
-                dark: '#047857'
+                primary: '#116530',
+                secondary: '#114232',
+                light: '#E8F5E9',
+                dark: '#0D3426',
+                yellow: '#FFCC1D'
             };
 
             // Initialize charts
@@ -691,12 +692,17 @@
                             backgroundColor: [
                                 greenColors.primary,
                                 greenColors.secondary,
+                                greenColors.yellow,
                                 greenColors.dark,
-                                '#34D399',
-                                '#6EE7B7',
-                                '#A7F3D0',
-                                '#D1FAE5'
-                            ]
+                                '#81C784',
+                                '#A5D6A7',
+                                '#C8E6C9',
+                                '#E8F5E9',
+                                '#66BB6A',
+                                '#4CAF50'
+                            ],
+                            borderWidth: 2,
+                            borderColor: '#fff'
                         }]
                     },
                     options: {
@@ -704,7 +710,24 @@
                         maintainAspectRatio: false,
                         plugins: {
                             legend: {
-                                position: 'bottom'
+                                position: 'bottom',
+                                labels: {
+                                    padding: 15,
+                                    font: {
+                                        size: 12
+                                    }
+                                }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        const label = context.label || '';
+                                        const value = context.parsed || 0;
+                                        const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                        const percentage = ((value / total) * 100).toFixed(1);
+                                        return `${label}: ${value} items (${percentage}%)`;
+                                    }
+                                }
                             }
                         }
                     }
