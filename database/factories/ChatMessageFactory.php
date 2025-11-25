@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Admin;
+
 use App\Models\ChatMessage;
 use App\Models\ChatSession;
 use App\Models\User;
@@ -56,12 +56,12 @@ class ChatMessageFactory extends Factory
   /**
    * Indicate that the message is from an admin.
    */
-  public function fromAdmin(?Admin $admin = null): static
+  public function fromAdmin(?User $admin = null): static
   {
     return $this->state(function (array $attributes) use ($admin) {
       return [
         'sender_type' => 'admin',
-        'sender_id' => $admin?->id ?? Admin::factory(),
+        'sender_id' => $admin?->id ?? User::factory()->state(['role' => 'admin']),
       ];
     });
   }

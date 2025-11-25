@@ -159,7 +159,7 @@
                                 <button
                                     class="inline-flex items-center gap-2 px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-lg text-gray-500 bg-white hover:text-sacli-green-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-sacli-green-500 focus:ring-offset-2 transition-all duration-200 ease-in-out">
                                     <x-icon name="user-circle" size="sm" />
-                                    <div>{{ auth()->guard('admin')->user()->name }}</div>
+                                    <div>{{ auth()->user()->name }}</div>
                                     <x-icon name="chevron-down" size="sm" />
                                 </button>
                             </x-slot>
@@ -174,10 +174,10 @@
                                 </x-dropdown-link>
 
                                 <!-- Logout -->
-                                <form method="POST" action="{{ route('admin.logout') }}">
+                                <form method="POST" action="{{ route('logout') }}">
                                     @csrf
 
-                                    <x-dropdown-link :href="route('admin.logout')"
+                                    <x-dropdown-link :href="route('logout')"
                                         onclick="event.preventDefault();
                                                         this.closest('form').submit();">
                                         <div class="flex items-center gap-2">
@@ -219,10 +219,10 @@
                         </div>
                         <div>
                             <div class="font-medium text-base text-gray-800">
-                                {{ auth()->guard('admin')->user()->name }}
+                                {{ auth()->user()->name }}
                             </div>
                             <div class="font-medium text-sm text-gray-500">
-                                {{ auth()->guard('admin')->user()->email }}
+                                {{ auth()->user()->email }}
                             </div>
                         </div>
                     </div>
@@ -233,10 +233,10 @@
                         </x-responsive-nav-link>
 
                         <!-- Logout -->
-                        <form method="POST" action="{{ route('admin.logout') }}">
+                        <form method="POST" action="{{ route('logout') }}">
                             @csrf
 
-                            <x-responsive-nav-link :href="route('admin.logout')" icon="arrow-right-on-rectangle"
+                            <x-responsive-nav-link :href="route('logout')" icon="arrow-right-on-rectangle"
                                 onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                                 {{ __('Log Out') }}

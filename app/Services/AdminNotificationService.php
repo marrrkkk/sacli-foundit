@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\Admin;
+
 use App\Models\ChatMessage;
 use App\Models\Item;
 use App\Models\User;
@@ -31,7 +31,7 @@ class AdminNotificationService
    */
   public function notifyNewChatMessage(ChatMessage $message): void
   {
-    $admins = Admin::all();
+    $admins = User::admins()->get();
 
     if ($admins->isNotEmpty()) {
       Notification::send($admins, new AdminNewChatMessageNotification($message));

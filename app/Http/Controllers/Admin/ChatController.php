@@ -76,8 +76,8 @@ class ChatController extends Controller
         'message' => 'required|string|max:5000',
       ]);
 
-      /** @var \App\Models\Admin $admin */
-      $admin = auth()->guard('admin')->user();
+      /** @var \App\Models\User $admin */
+      $admin = auth()->user();
 
       $message = $this->chatService->sendAdminMessage(
         $admin,

@@ -15,9 +15,12 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // Check if admin is authenticated using the admin guard
-        if (!auth()->guard('admin')->check()) {
-            return redirect()->route('admin.login')->with('error', 'You must be logged in as an admin to access this area.');
+        // Check if user is authenticated and is an admin
+        if (!auth()->check() || !auth()->user()->isAdmin()) {
+            if (!auth()->check()) {
+                return redirect()->route('login');
+            }
+            abort(403, 'Unauthorized action.');
         }
 
         return $next($request);

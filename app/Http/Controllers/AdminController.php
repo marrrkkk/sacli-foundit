@@ -46,8 +46,8 @@ class AdminController extends Controller
     ])->count();
 
     // Get admin notifications
-    /** @var \App\Models\Admin $admin */
-    $admin = auth()->guard('admin')->user();
+    /** @var \App\Models\User $admin */
+    $admin = auth()->user();
     $unreadNotificationCount = $this->adminNotificationService->getUnreadNotificationCount($admin);
     $recentNotifications = $this->adminNotificationService->getRecentNotifications($admin, 5);
 
@@ -498,8 +498,8 @@ class AdminController extends Controller
     $limit = $request->get('limit', 10);
     $unreadOnly = $request->boolean('unread_only', false);
 
-    /** @var \App\Models\Admin $admin */
-    $admin = auth()->guard('admin')->user();
+    /** @var \App\Models\User $admin */
+    $admin = auth()->user();
 
     $notifications = $unreadOnly
       ? $admin->unreadNotifications()->limit($limit)->get()
@@ -526,8 +526,8 @@ class AdminController extends Controller
     ]);
 
     try {
-      /** @var \App\Models\Admin $admin */
-      $admin = auth()->guard('admin')->user();
+      /** @var \App\Models\User $admin */
+      $admin = auth()->user();
       $notificationIds = $request->get('notification_ids', []);
 
       if ($request->boolean('mark_all')) {

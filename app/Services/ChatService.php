@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\Admin;
+
 use App\Models\ChatMessage;
 use App\Models\ChatSession;
 use App\Models\User;
@@ -82,7 +82,7 @@ class ChatService
    * @return ChatMessage
    * @throws ValidationException
    */
-  public function sendAdminMessage(Admin $admin, ChatSession $session, string $message): ChatMessage
+  public function sendAdminMessage(User $admin, ChatSession $session, string $message): ChatMessage
   {
     // Validate message is not empty
     $trimmedMessage = trim($message);

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\URL; // <-- add this
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,6 +26,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Relation::morphMap([
+            'user' => \App\Models\User::class,
+            'admin' => \App\Models\User::class,
+        ]);
+
         // FORCE HTTPS
         if ($this->app->environment('production')) {
             URL::forceScheme('https');

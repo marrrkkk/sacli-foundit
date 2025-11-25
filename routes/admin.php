@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\AdminController;
+
 use App\Http\Controllers\Admin\ChatController;
-use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\NotificationController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,15 +19,9 @@ use Illuminate\Support\Facades\Route;
 
 // Admin Authentication Routes (guest only)
 Route::prefix('admin')->name('admin.')->group(function () {
-  Route::middleware('guest:admin')->group(function () {
-    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-    Route::post('/login', [AuthController::class, 'login']);
-  });
-
   // Admin Authenticated Routes
   Route::middleware('admin')->group(function () {
-    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
 
     // Admin Chat Routes
     Route::prefix('chat')->name('chat.')->group(function () {

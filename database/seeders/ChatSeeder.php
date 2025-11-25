@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Admin;
+
 use App\Models\ChatMessage;
 use App\Models\ChatSession;
 use App\Models\User;
@@ -17,7 +17,7 @@ class ChatSeeder extends Seeder
   {
     // Get or create some users and admins
     $users = User::factory()->count(5)->create();
-    $admins = Admin::factory()->count(2)->create();
+    $admins = User::factory()->count(2)->state(['role' => 'admin'])->create();
 
     // Create chat sessions with messages for each user
     foreach ($users as $index => $user) {

@@ -40,7 +40,7 @@
                         {{ __('About') }}
                     </x-nav-link>
 
-                    @if (auth()->guard('admin')->check())
+                    @if (auth()->check() && auth()->user()->isAdmin())
                         <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.*')" icon="shield-check"
                             class="text-sacli-green-700 font-semibold">
                             {{ __('Admin') }}
@@ -146,7 +146,7 @@
 
             @auth
                 <div class="border-t border-sacli-green-200 pt-2 mt-2">
-                    @if (auth()->guard('admin')->check())
+                    @if (auth()->check() && auth()->user()->isAdmin())
                         <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.*')" icon="shield-check"
                             class="text-sacli-green-700 font-semibold">
                             {{ __('Admin Panel') }}
