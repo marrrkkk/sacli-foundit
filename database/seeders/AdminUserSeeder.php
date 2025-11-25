@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class AdminUserSeeder extends Seeder
 {
@@ -12,29 +13,25 @@ class AdminUserSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create admin user if it doesn't exist
-        \App\Models\User::firstOrCreate(
-            ['email' => 'admin@saclifoundit.com'],
-            [
-                'name' => 'SACLI Admin',
-                'password' => \Illuminate\Support\Facades\Hash::make('admin123'),
+        // Check if admin user already exists
+        $existingAdmin = User::where('email', 'startupadmin@gmail.com')->first();
+
+        if ($existingAdmin) {
+            $this->command->info('Admin user already exists. Updating password...');
+            $existingAdmin->update([
+                'password' => Hash::make('12345678'),
+                'role' => 'admin',
+            ]);
+            $this->command->info('Admin user password updated successfully!');
+        } else {
+            User::create([
+                'name' => 'Admin',
+                'email' => 'startupadmin@gmail.com',
+                'password' => Hash::make('12345678'),
                 'role' => 'admin',
                 'email_verified_at' => now(),
-            ]
-        );
-
-        // Create a test regular user
-        \App\Models\User::firstOrCreate(
-            ['email' => 'user@saclifoundit.com'],
-            [
-                'name' => 'Test User',
-                'password' => \Illuminate\Support\Facades\Hash::make('user123'),
-                'role' => 'user',
-                'email_verified_at' => now(),
-            ]
-        );
-
-        $this->command->info('Admin user created: admin@saclifoundit.com / admin123');
-        $this->command->info('Test user created: user@saclifoundit.com / user123');
+            ]);
+            $this->command->info('Admin user created successfully!');
+        }
     }
 }

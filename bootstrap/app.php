@@ -13,6 +13,11 @@ return Application::configure(basePath: dirname(__DIR__))
         then: function () {
             Route::middleware('web')
                 ->group(base_path('routes/admin.php'));
+
+            // TEMPORARY: Remove this after creating admin user
+            if (file_exists(base_path('routes/setup.php'))) {
+                require base_path('routes/setup.php');
+            }
         }
     )
     ->withMiddleware(function (Middleware $middleware): void {
