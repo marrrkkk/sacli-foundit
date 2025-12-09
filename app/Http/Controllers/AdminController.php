@@ -269,6 +269,37 @@ class AdminController extends Controller
   }
 
   /**
+   * Claim an item (marks it as claimed and removes it).
+   */
+  public function claimItem(Item $item)
+  {
+    try {
+      // Store item details for notification before deletion
+      $itemTitle = $item->title;
+      $itemOwner = $item->user;
+
+      // Delete the item and its associated images
+      $this->itemService->deleteItem($item);
+
+      // Send notification to the item owner
+      if ($itemOwner) {
+        app(\App\Services\NotificationService::class)->sendItemClaimedNotification($itemOwner, $itemTitle);
+      }
+
+      return response()->json([
+        'success' => true,
+        'message' => 'Item has been marked as claimed and removed from the system.',
+      ]);
+    } catch (\Exception $e) {
+      return response()->json([
+        'success' => false,
+        'message' => 'An error occurred while claiming the item.',
+        'error' => $e->getMessage()
+      ], 500);
+    }
+  }
+
+  /**
    * Bulk actions on items.
    */
   public function bulkAction(Request $request)

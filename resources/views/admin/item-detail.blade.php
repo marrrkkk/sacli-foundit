@@ -23,6 +23,13 @@
                         Reject
                     </button>
                 @endif
+                @if ($item->status === 'verified')
+                    <button onclick="claimItem({{ $item->id }})"
+                        class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ease-in-out shadow-sm hover:shadow-md">
+                        <x-icon name="hand-raised" size="sm" />
+                        Mark as Claimed
+                    </button>
+                @endif
             </div>
         </div>
     </x-slot>
@@ -263,6 +270,11 @@
                                         <x-icon name="arrow-top-right-on-square" size="sm" />
                                         View Public Page
                                     </a>
+                                    <button onclick="claimItem({{ $item->id }})"
+                                        class="w-full inline-flex items-center justify-center gap-2 bg-sacli-green-600 hover:bg-sacli-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 shadow-sm hover:shadow-md">
+                                        <x-icon name="hand-raised" size="sm" />
+                                        Mark as Claimed
+                                    </button>
                                 @endif
 
                                 <button onclick="contactUser()"
@@ -445,6 +457,38 @@
                 const email = '{{ $item->user->email }}';
                 const subject = encodeURIComponent('Regarding your {{ $item->type }} item: {{ $item->title }}');
                 window.location.href = `mailto:${email}?subject=${subject}`;
+            }
+
+            function claimItem(itemId) {
+                if (!confirm(
+                        'Are you sure you want to mark this item as claimed? This will permanently remove the item from the system.'
+                    )) {
+                    return;
+                }
+
+                fetch(`/admin/items/${itemId}/claim`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            showNotification(data.message, 'success');
+                            // Redirect to items list after successful claim
+                            setTimeout(() => {
+                                window.location.href = '{{ route('admin.items') }}';
+                            }, 1000);
+                        } else {
+                            showNotification(data.message || 'An error occurred', 'error');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        showNotification('An error occurred while processing the request', 'error');
+                    });
             }
 
             // Handle verification form submission

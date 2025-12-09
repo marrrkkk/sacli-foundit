@@ -112,6 +112,7 @@ Route::middleware(['admin', 'throttle:admin'])
         // Item verification and management
         Route::get('/pending-items', 'pendingItems')->name('pending-items');
         Route::post('/items/{item}/verify', 'verify')->name('items.verify');
+        Route::post('/items/{item}/claim', 'claimItem')->name('items.claim');
         Route::post('/items/bulk-action', 'bulkAction')->name('items.bulk-action');
         Route::get('/items', 'items')->name('items');
         Route::get('/items/{item}', 'showItem')->name('items.show');

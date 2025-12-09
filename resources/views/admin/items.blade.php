@@ -263,6 +263,16 @@
                                                                 class="absolute bottom-full mb-2 hidden group-hover:block bg-gray-900 text-white text-xs rounded py-1 px-2 whitespace-nowrap">Reject</span>
                                                         </button>
                                                     @endif
+                                                    @if ($item->status === 'verified')
+                                                        <button onclick="claimItem({{ $item->id }})"
+                                                            class="inline-flex items-center justify-center w-8 h-8 text-blue-600 hover:text-white hover:bg-blue-600 rounded-lg transition-all duration-200 group relative"
+                                                            title="Mark as Claimed">
+                                                            <x-icon name="hand-raised" size="sm" />
+                                                            <span
+                                                                class="absolute bottom-full mb-2 hidden group-hover:block bg-gray-900 text-white text-xs rounded py-1 px-2 whitespace-nowrap">Mark
+                                                                as Claimed</span>
+                                                        </button>
+                                                    @endif
                                                 </div>
                                             </td>
                                         </tr>
@@ -300,6 +310,38 @@
                         body: JSON.stringify({
                             action: action
                         })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            showNotification(data.message, 'success');
+                            // Reload the page to reflect changes
+                            setTimeout(() => {
+                                window.location.reload();
+                            }, 1000);
+                        } else {
+                            showNotification(data.message || 'An error occurred', 'error');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        showNotification('An error occurred while processing the request', 'error');
+                    });
+            }
+
+            function claimItem(itemId) {
+                if (!confirm(
+                        'Are you sure you want to mark this item as claimed? This will permanently remove the item from the system.'
+                        )) {
+                    return;
+                }
+
+                fetch(`/admin/items/${itemId}/claim`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        }
                     })
                     .then(response => response.json())
                     .then(data => {

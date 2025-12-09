@@ -78,6 +78,26 @@ class NotificationService
   }
 
   /**
+   * Send item claimed notification to user.
+   */
+  public function sendItemClaimedNotification(User $user, string $itemTitle): void
+  {
+    try {
+      $user->notify(new \App\Notifications\ItemClaimedNotification($itemTitle));
+
+      Log::info('Item claimed notification sent', [
+        'user_id' => $user->id,
+        'item_title' => $itemTitle,
+      ]);
+    } catch (\Exception $e) {
+      Log::error('Failed to send item claimed notification', [
+        'user_id' => $user->id,
+        'error' => $e->getMessage(),
+      ]);
+    }
+  }
+
+  /**
    * Send verification confirmation notification.
    */
   public function sendVerificationConfirmation(Item $item): void
