@@ -18,11 +18,17 @@ class DatabaseSeeder extends Seeder
             AdminUserSeeder::class,
         ]);
 
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        // Only create test user if it doesn't exist (for local development)
+        if (app()->environment('local')) {
+            User::firstOrCreate(
+                ['email' => 'test@example.com'],
+                [
+                    'name' => 'Test User',
+                    'email' => 'test@example.com',
+                    'password' => bcrypt('password'),
+                    'email_verified_at' => now(),
+                ]
+            );
+        }
     }
 }
